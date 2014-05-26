@@ -14,7 +14,7 @@ class LinkedIn:
     def Authorize(self,browserInstance,linkedInCredentials):
         print "Authorizing LinkedIn..."
         try:
-            self.oauthLI = LIOauth("uugjyzgm6537","vJvp4cEipe7fcuHq")
+            self.oauthLI = LIOauth("75zsaemfpnjp6v","S4u1DCShnHk4se4f")
             self.oauthLI.Authorize(browserInstance,linkedInCredentials)
             return True
         except Exception,exp:

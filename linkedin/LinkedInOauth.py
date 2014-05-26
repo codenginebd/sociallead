@@ -46,7 +46,7 @@ class LIOauth:
 		# API call to retrieve profile using access token
 		token = oauth.Token(key=access_token['oauth_token'],secret=access_token['oauth_token_secret'])
 		self.client = oauth.Client(consumer, token)
-		print 'Access Token: %s' % token
+		print 'Access Token: %s' % access_token['oauth_token']
 		print "LinkedIn Authorization Successful."
 	def Call(self,url):
 		returnedContent = None,None
