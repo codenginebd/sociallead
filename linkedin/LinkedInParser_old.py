@@ -215,8 +215,8 @@ class LinkedInParser(FIIParser):
 		experienceAndEducations = {}
 		experiences = self.ParseExperiences(pageSource)
 		experienceAndEducations["working_experience"] = experiences
-		#educations = self.ParseEducations(pageSource)
-		#experienceAndEducations["educations"] = educations
+		educations = self.ParseEducations(pageSource)
+		experienceAndEducations["educations"] = educations
 		return experienceAndEducations
 	def ParseAdditionalInfoHeading(self,pageSource):
 		heading = ""
@@ -512,21 +512,21 @@ class LinkedInParser(FIIParser):
 	def ParseUserProfile(self,pageSource):
 		profile = {}
 		profile["general_info"] = self.ParseGeneralInfo(pageSource)
-		#profile["connections"] = {"count":self.ParseConnectionsCount(pageSource)}
+		profile["connections"] = {"count":self.ParseConnectionsCount(pageSource)}
 		profile["works_and_education"] = self.ParseExperiencesAndEducations(pageSource)
-		additionalInfo = {} #self.ParseAdditionalInfo(pageSource)
+		additionalInfo = self.ParseAdditionalInfo(pageSource)
 		profile = dict(profile.items()+additionalInfo.items())
 		contactInfo = self.ParseContactInfo(pageSource)
 		profile["contact_info"] = contactInfo 
-		#skillsAndExpertise = self.ParseTechSkillsAndExpertise(pageSource)
-		#if len(skillsAndExpertise) > 0:
-		#	profile["skills_and_expertise"] = skillsAndExpertise
-		#honoursAndAwards = self.ParseHonoursAndAwards(pageSource)
-		#if len(honoursAndAwards) > 0:
-		#	profile["honours_and_awards"] = honoursAndAwards
-		#certifications = self.ParseCertifications(pageSource)
-		#profile["certifications"] = certifications
-		#profile["groups"] = self.ParseGroups(pageSource)
+		skillsAndExpertise = self.ParseTechSkillsAndExpertise(pageSource)
+		if len(skillsAndExpertise) > 0:
+			profile["skills_and_expertise"] = skillsAndExpertise
+		honoursAndAwards = self.ParseHonoursAndAwards(pageSource)
+		if len(honoursAndAwards) > 0:
+			profile["honours_and_awards"] = honoursAndAwards
+		certifications = self.ParseCertifications(pageSource)
+		profile["certifications"] = certifications
+		profile["groups"] = self.ParseGroups(pageSource)
 		return profile
 	def ConvertURL(self,siteStandardProfileUrl):
 		###https://www.linkedin.com/profile/view?id=36379560&authType=NAME_SEARCH&authToken=Xu6Q&trk=api*a231405*s2393+07*

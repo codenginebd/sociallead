@@ -92,6 +92,13 @@ class Browser:
         except Exception,exp:
             return None
 
+    def FindElementByText(self,text):
+        try:
+            element = self.browser.find_element_by_link_text(text)
+            return element
+        except Exception,msg:
+            return None
+
     def ExecuteScriptAndWait(self,code):
         try:
             self.browser.execute_script(code)
@@ -113,7 +120,7 @@ class Browser:
 
     def scroll_to_pager_link(self):
         try:
-            scrollto_pager_link = 'var el = document.getElementById("result-range");el.scrollIntoView(true);'
+            scrollto_pager_link = 'var el = document.getElementById("results-pagination");el.scrollIntoView(true);'
             self.ExecuteScriptAndWait(scrollto_pager_link)
         except Exception,exp:
             print "Exception Inside page scroll. %s" % str(exp)
