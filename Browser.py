@@ -120,7 +120,8 @@ class Browser:
 
     def scroll_to_pager_link(self):
         try:
-            scrollto_pager_link = 'var el = document.getElementById("results-pagination");el.scrollIntoView(true);'
+            scrollto_pager_link = 'var el = document.getElementById("Y-N-ffs");el.scrollIntoView(true);'
+            #scrollto_pager_link = 'var el = document.getElementsByClassName("pagination");el[0].scrollIntoView(true);'
             self.ExecuteScriptAndWait(scrollto_pager_link)
         except Exception,exp:
             print "Exception Inside page scroll. %s" % str(exp)
