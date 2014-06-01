@@ -1,63 +1,45 @@
-import oauth2 as oauth
-import urlparse
-from LinkedInParser import *
+
+import urllib2
+import json
+import GlobalConstants
+from Browser import *
 
 class LIOauth:
-	def __init__(self,appKey,appSecret):
-		self.consumer_key = appKey
-		self.consumer_secret = appSecret
-		self.request_token_url = 'https://api.linkedin.com/uas/oauth/requestToken?scope=r_emailaddress+r_network'
-		self.access_token_url = 'https://api.linkedin.com/uas/oauth/accessToken'
-		self.authorize_url = 'https://www.linkedin.com/uas/oauth/authenticate'
-		print "Initializing LinkedIn Oauth Library..."
-	def GetPIN(self,browser,requestUrl,linkedInCredentials):
-		accessCode = ""
-		email = linkedInCredentials.get("email")
-		password = linkedInCredentials.get("password")
-		browser.OpenURL(requestUrl)
-		#authPageSource = browser.GetPage()
-		allowAccessButton = browser.FindElementByName("authorize")
-		if allowAccessButton is not None:
-			emailInputBox = browser.FindElementByName("session_key")
-			emailInputBox.send_keys(email)
-			passwordInputBox = browser.FindElementByName("session_password")
-			passwordInputBox.send_keys(password)
-			allowAccessButton.click()
-		accessCodePageSource = browser.GetPage()
-		liParser = LinkedInParser()
-		accessCode = liParser.ParseAccessCode(accessCodePageSource)
-		return accessCode
-	def Authorize(self,browser,linkedInCredentials):
-		consumer = oauth.Consumer(self.consumer_key, self.consumer_secret)
-		client = oauth.Client(consumer)
-		resp, content = client.request(self.request_token_url, "POST")
-		request_token = dict(urlparse.parse_qsl(content))
-		requestUrl = "%s?oauth_token=%s" % (self.authorize_url, request_token['oauth_token'])
-		#print "Copy this url into the browser: "
-		print requestUrl
-		oauth_verifier = self.GetPIN(browser,requestUrl,linkedInCredentials)
-		#oauth_verifier = raw_input('Enter the PIN here: ')
-		#Now pass in verifier code in order to upgrade for access token
-		token = oauth.Token(request_token['oauth_token'], request_token['oauth_token_secret'])
-		token.set_verifier(oauth_verifier)
-		client = oauth.Client(consumer, token)
-		resp, content = client.request(self.access_token_url, "POST")
-		access_token = dict(urlparse.parse_qsl(content))
-		# API call to retrieve profile using access token
-		token = oauth.Token(key=access_token['oauth_token'],secret=access_token['oauth_token_secret'])
-		self.client = oauth.Client(consumer, token)
-		print 'Access Token: %s' % token
-		print "LinkedIn Authorization Successful."
-	def Call(self,url):
-		returnedContent = None,None
-		if self.client is not None:
-			resp, content = self.client.request(url)
-			if resp is not None and resp["status"] == "200":
-				returnedContent = content
-			else:
-				returnedContent = ""
-		return returnedContent ###Return JSON response
-				
-		return resp,content
-	
-	
+    def __init__(self):
+        self.app_key = GlobalConstants.app_key
+        self.app_secret = GlobalConstants.app_secret
+        self.browser = Browser()
+    def get_access_token(self):
+        self.browser.OpenURL(GlobalConstants.authorization_url)
+        allowAccessButton = self.browser.FindElementByName("authorize")
+
+        if not allowAccessButton:
+            print 'Access button not found! There was an error. Please close the app and start again.'
+            return
+        emailInputBox = self.browser.FindElementByName("session_key")
+        emailInputBox.send_keys(GlobalConstants.login_email)
+        passwordInputBox = self.browser.FindElementByName("session_password")
+        passwordInputBox.send_keys(GlobalConstants.login_password)
+        allowAccessButton.click()
+        page_url = self.browser.GetPageURL()
+        print 'Page URL: %s' % page_url
+        """ Now parse the page url. """
+        #http://codenginebd.appspot.com/?code=AQSUeY-dXUmEoYT7Vu5Rl6sZ0lnDRMKnZxBnj_fntzEZfGv50vhx-LIDScdIIn9kIOQy_2HkPG2inTHM0_hXgI94jfWMFniI762_HziS-i_jL_baSio&state=STATE
+        temp = page_url[page_url.index('code=')+5:]
+        auth_code = temp[:temp.index('&state')]
+        """ Now we got the oauth code. Request to get the access token. First form the access token url. """
+        GlobalConstants.access_token_url = GlobalConstants.access_token_url.replace('__CODE__',auth_code)
+        print 'Now the access token url is:'
+        print GlobalConstants.access_token_url
+        request = urllib2.Request(GlobalConstants.access_token_url)
+        request.get_method = lambda: 'POST'
+        http_obj = urllib2.urlopen(request)
+        page = http_obj.read()
+        print page
+        """ Now we got the json response. Need to parse the access token from the page content. """
+        json_data = json.loads(page)
+        access_token = json_data.get('access_token')
+        if access_token:
+            people_search_url = GlobalConstants.people_search_url.replace('__COMPANY_NAME__','Commlink').replace('__OAUTH2_ACCESS_TOKEN_URL__',access_token)
+            self.browser.OpenURL(people_search_url)
+

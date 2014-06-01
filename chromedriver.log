@@ -1,0 +1,63 @@
+[0.001][INFO]:      ChromeDriver 26.0.1383.0 C:\Python27\Scripts\chromedriver.exe
+[0.498][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chromeOptions": {
+      "args": [  ],
+      "extensions": [  ]
+   },
+   "javascriptEnabled": true,
+   "platform": "ANY",
+   "version": ""
+}
+
+[0.499][INFO]:      Launching chrome: "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --disable-background-networking --disable-sync --disable-translate --disable-web-resources --safebrowsing-disable-auto-update --safebrowsing-disable-download-protection --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --enable-logging --log-level=1 --ignore-certificate-errors about:blank
+[0.903][INFO]:      Connected to Chrome successfully. Version: 31.0.1650.63
+[0.943][FINE]:      Command received (/session/4c77efaad0d02c6a8f03fefdbee19d3d)
+[0.943][FINE]:      Command finished (/session/4c77efaad0d02c6a8f03fefdbee19d3d) with response {
+   "sessionId": "4c77efaad0d02c6a8f03fefdbee19d3d",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "26.0.1383.0",
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "windows",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "31.0.1650.63",
+      "webStorageEnabled": true
+   }
+}
+
+[0.950][FINE]:      Command received (/session/4c77efaad0d02c6a8f03fefdbee19d3d/url) with params {
+   "sessionId": "4c77efaad0d02c6a8f03fefdbee19d3d",
+   "url": "http://www.google.com"
+}
+
+[0.950][FINER]:     Waiting for all views to stop loading...
+[0.951][FINER]:     Done waiting for all views to stop loading
+[2.655][FINE]:      Command received (/session/4c77efaad0d02c6a8f03fefdbee19d3d/url) with params {
+   "sessionId": "4c77efaad0d02c6a8f03fefdbee19d3d",
+   "url": "https://www.linkedin.com/uas/oauth/authenticate?oauth_token=75--8edf98cd-a25b-4a30-94a2-7d2f56be6994"
+}
+
+[2.655][FINER]:     Waiting for all views to stop loading...
+[2.656][FINER]:     Done waiting for all views to stop loading
+[2.658][FINE]:      Command received (/session/4c77efaad0d02c6a8f03fefdbee19d3d/element) with params {
+   "sessionId": "4c77efaad0d02c6a8f03fefdbee19d3d",
+   "using": "name",
+   "value": "authorize"
+}
+
+[2.658][FINER]:     Waiting for all views to stop loading...
+[2.659][FINER]:     Done waiting for all views to stop loading
+[2.661][FINE]:      Command received (/session/4c77efaad0d02c6a8f03fefdbee19d3d/source)
+[2.661][FINER]:     Waiting for all views to stop loading...
+[2.661][FINER]:     Done waiting for all views to stop loading
