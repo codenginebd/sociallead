@@ -126,13 +126,6 @@ class Browser:
         except Exception,exp:
             print "Exception Inside page scroll. %s" % str(exp)
 
-	# def scroll_to_pager_link(self):
-		# try:
-			# #scrollto_pager_link = 'var elem = document.getElementById("'+eachCategoryDataId.get("result-range")+'");window.scrollTo(0, elem.scrollHeight);'
-            # #self.browser.ExecuteScriptAndWait(scrollto_pager_link)
-        # except Exception,exp:
-			# print "Auto scrolling failed."
-
 
 
 
