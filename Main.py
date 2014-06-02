@@ -4,6 +4,7 @@ import math
 from bs4 import BeautifulSoup
 from Browser import *
 from time import sleep
+import CSVFileHandler
 
 linkedin_login_url = 'https://www.linkedin.com/uas/login?goback=&trk=hb_signin'
 linkedin_advance_search_url = 'http://www.linkedin.com/vsearch/p?company=DECOMO&openAdvancedForm=true&companyScope=CP&locationType=Y&rsid=2165730371401558704154&orig=MDYS&pt=people&page_num=4'
@@ -92,13 +93,12 @@ class Main:
         sleep(4)
         print 'Login successful.'
         """ The crawler will perform search to get all 1st and 2nd degree connections of the current user. """
-        #profile_link = 'http://www.linkedin.com/profile/view?id=10978536&authType=OUT_OF_NETWORK&authToken=Y7Ls&locale=en_US&srchid=2165730371401549148728&srchindex=1&srchtotal=52441&trk=vsrp_people_res_name&trkInfo=VSRPsearchId%3A2165730371401549148728%2CVSRPtargetId%3A10978536%2CVSRPcmpt%3Aprimary'
-        #self.browser.OpenURL(profile_link)
-        #page = self.browser.GetPage()
-        #f = open('profile_detail_page.htm','w')
-        #f.write(page)
-        #f.close()
-        print  self.handle_advance_search('Commlink')
+        #print  self.handle_advance_search('Commlink')
+        company_list = CSVFileHandler.read_company_list('Linkedin_contacts_for_crawling_v001.csv')
+        for company in company_list:
+            company_name = company['full_name']
+            search_result = self.handle_advance_search(company_name)
+            CSVFileHandler.write_profiles(company_name,search_result)
 
 Main().run()
 
