@@ -32,6 +32,6 @@ def write_profiles(company_name,profiles,file_name='output.csv'):
         data_rows += [
             [company_name,profile['name'],profile['profile_url']]
         ]
-    with open(file_name, 'w') as fp:
+    with open(file_name, 'a') as fp:
         a = unicodecsv.writer(fp, delimiter=',')
         a.writerows(data_rows)
