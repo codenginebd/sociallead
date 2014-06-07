@@ -6,6 +6,7 @@ from Browser import *
 from time import sleep
 import CSVFileHandler
 from Authenticator import *
+from DBHandler import *
 
 linkedin_login_url = 'https://www.linkedin.com/uas/login?goback=&trk=hb_signin'
 linkedin_advance_search_url = 'http://www.linkedin.com/vsearch/p?company=DECOMO&openAdvancedForm=true&companyScope=CP&locationType=Y&rsid=2165730371401558704154&orig=MDYS&pt=people&page_num=4'
@@ -14,7 +15,7 @@ advance_search_link = 'https://www.linkedin.com/vsearch/p?company=__COMPANY_NAME
 
 class PeopleSearchHandler(Authenticator):
     def __init__(self):
-        pass
+        self.db = DBHandler()
 
     def parse_profile_links(self,page):
         profiles = []
@@ -78,11 +79,21 @@ class PeopleSearchHandler(Authenticator):
         """ The crawler will perform search to get all 1st and 2nd degree connections of the current user. """
         #print  self.handle_advance_search('Commlink')
         company_list = CSVFileHandler.read_company_list('Linkedin_contacts_for_crawling_v001.csv')
-        for company in company_list:
+        last_search_index = self.db.get_last_searched_company_index()
+        if not last_search_index:
+            last_search_index = 0
+        else:
+            last_search_index = last_search_index[0][0]
+
+        print 'Last searched company index %s' % str(last_search_index)
+
+        company_list = company_list[last_search_index:]
+        for index,company in enumerate(company_list):
             company_name = company['full_name']
             search_result = self.handle_advance_search(company_name)
             if search_result:
                 CSVFileHandler.write_basic_profiles(company_name,search_result)
+            self.db.update_last_searched_company(index,company_name)
         self.browser.Close()
 
 
