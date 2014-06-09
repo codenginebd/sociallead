@@ -1,5 +1,8 @@
 __author__ = 'Codengine'
 
+from time import sleep
+from random import randint
+
 from Browser import *
 from linkedin import LinkedInParser
 import CSVFileHandler
@@ -8,7 +11,7 @@ from DBHandler import *
 
 class PeopleDetailsHanlder(Authenticator):
     def __init__(self,file_name='output.csv'):
-        print 'Initializing People Details Handler...'
+        #print 'Initializing People Details Handler...'
         self.db = DBHandler()
 
     def handle(self):
@@ -85,6 +88,10 @@ class PeopleDetailsHanlder(Authenticator):
                 CSVFileHandler.write_full_profile(modified_profile)
 
             self.db.update_last_crawled_profile_index(i,modified_profile['current_company'])
+
+            time_to_sleep = randint(3,20)
+            print 'Sleeping %s seconds.' % str(time_to_sleep)
+            sleep(time_to_sleep)
 
         self.browser.Close()
 
