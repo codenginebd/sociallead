@@ -27,7 +27,7 @@ def read_company_list(file_name):
         ]
     return contents
 
-def read_basic_profiles(file_name='output.csv'):
+def read_basic_profiles(file_name='basic_profiles.csv'):
     contents = []
     f = open(file_name,'r')
     lines = f.readlines()
@@ -41,7 +41,7 @@ def read_basic_profiles(file_name='output.csv'):
     return contents
 
 
-def write_basic_profiles(company_name,profiles,file_name='output.csv'):
+def write_basic_profiles(company_name,profiles,file_name='basic_profiles.csv'):
     data_rows = []
     for profile in profiles:
         data_rows += [

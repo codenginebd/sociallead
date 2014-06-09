@@ -8,7 +8,7 @@ from DBHandler import *
 
 class PeopleDetailsHanlder(Authenticator):
     def __init__(self,file_name='output.csv'):
-        print 'Initializing People Details Handler...'
+        #print 'Initializing People Details Handler...'
         self.db = DBHandler()
 
     def handle(self):
