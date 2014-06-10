@@ -22,6 +22,7 @@ class Main:
         db.delete_all_data()
         db.close()
 
+
     def fresh_run(self):
         self.people_search_handler.run()
         self.people_details_handler.handle()
