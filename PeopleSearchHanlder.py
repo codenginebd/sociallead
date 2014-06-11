@@ -1,17 +1,20 @@
 __author__ = 'Codengine'
 
 import math
+from random import randint
+from time import sleep
+
 from bs4 import BeautifulSoup
 from Browser import *
-from time import sleep
 import CSVFileHandler
 from Authenticator import *
 from DBHandler import *
 
+
 linkedin_login_url = 'https://www.linkedin.com/uas/login?goback=&trk=hb_signin'
 linkedin_advance_search_url = 'http://www.linkedin.com/vsearch/p?company=DECOMO&openAdvancedForm=true&companyScope=CP&locationType=Y&rsid=2165730371401558704154&orig=MDYS&pt=people&page_num=4'
 login_cred_linkedin = {'email':'codenginebd@gmail.com','password':'lapsso065lapsso065'}
-advance_search_link = 'https://www.linkedin.com/vsearch/p?company=__COMPANY_NAME__&openAdvancedForm=true&companyScope=CP&locationType=Y&rsid=2165730371401633387631&orig=ADVS&f_N=F,S,A&openFacets=N,G,CC&page_num=1&pt=people'
+advance_search_link = 'https://www.linkedin.com/vsearch/p?company=__COMPANY_NAME__&openAdvancedForm=true&companyScope=CP&locationType=Y&rsid=2165730371401633387631&orig=ADVS&f_N=F,S&openFacets=N,G,CC&page_num=1&pt=people'
 
 class PeopleSearchHandler(Authenticator):
     def __init__(self):
@@ -80,10 +83,6 @@ class PeopleSearchHandler(Authenticator):
         #print  self.handle_advance_search('Commlink')
         company_list = CSVFileHandler.read_company_list('Linkedin_contacts_for_crawling_v001.csv')
         last_search_index = self.db.get_last_searched_company_index()
-        if not last_search_index:
-            last_search_index = 0
-        else:
-            last_search_index = last_search_index[0][0]
 
         print 'Last searched company index %s' % str(last_search_index)
 
@@ -93,7 +92,10 @@ class PeopleSearchHandler(Authenticator):
             search_result = self.handle_advance_search(company_name)
             if search_result:
                 CSVFileHandler.write_basic_profiles(company_name,search_result)
-            self.db.update_last_searched_company(index,company_name)
+            self.db.update_last_searched_company(index+last_search_index+1)
+            time_to_sleep = randint(3,10)
+            print 'Sleeping %s seconds.' % (str(time_to_sleep))
+            sleep(time_to_sleep)
         self.browser.Close()
 
 

@@ -21,10 +21,6 @@ class PeopleDetailsHanlder(Authenticator):
         super(PeopleDetailsHanlder,self).hanlde_login(self.browser)
 
         last_crawled_profile = self.db.get_last_crawled_profile_index()
-        if not last_crawled_profile:
-            last_crawled_profile = 0
-        else:
-            last_crawled_profile = last_crawled_profile[0][0]
 
         print 'Last crawled profile index %s' % str(last_crawled_profile)
 
@@ -87,7 +83,7 @@ class PeopleDetailsHanlder(Authenticator):
 
                 CSVFileHandler.write_full_profile(modified_profile)
 
-            self.db.update_last_crawled_profile_index(i,modified_profile['current_company'])
+            self.db.update_last_crawled_profile_index(i+last_crawled_profile+1)
 
             time_to_sleep = randint(3,20)
             print 'Sleeping %s seconds.' % str(time_to_sleep)
