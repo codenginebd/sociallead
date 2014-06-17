@@ -85,7 +85,7 @@ class PeopleDetailsHanlder(Authenticator):
 
             self.db.update_last_crawled_profile_index(i+last_crawled_profile+1)
 
-            time_to_sleep = randint(3,20)
+            time_to_sleep = randint(5,25)
             print 'Sleeping %s seconds.' % str(time_to_sleep)
             sleep(time_to_sleep)
 
