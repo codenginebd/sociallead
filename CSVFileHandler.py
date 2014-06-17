@@ -65,8 +65,8 @@ def write_full_profile(profile,file_name='full_profiles.csv'):
         temp = []
         for key,value in company.items():
             temp += [key+':'+value.replace('&#8211;','-')]
-        temp2 += [';'.join(temp)]
-    row += ['|'.join(temp2)]
+        row += [';'.join(temp)]
+    #row += ['|'.join(temp2)]
 
     with open(file_name,'a') as ap:
         a = unicodecsv.writer(ap,delimiter=',')
