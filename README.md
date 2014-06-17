@@ -27,3 +27,5 @@ cd to the project directory in cmd. Run the command python Main.py.
 Now the program will give a menu. Please input an option. 
 
 -r for reset. -s for start, -q for exit the program.
+
+Linkedin_contacts_for_crawling_v001.csv is the input file and login_cred.json is the linkedin login email/password file. Please put email/password before running the program. And also put all company names with other information in the file specified.
